@@ -142,7 +142,6 @@ export const SongDetail = ({
 
   const addToFavorites = async (e, songID) => {
     e.stopPropagation();
-    console.log(songID);
     try {
       const res = await axiosWithAuth().post(
         "https://cors-anywhere.herokuapp.com/https://spotify-song-suggester-be.herokuapp.com/api/tracks/like",
@@ -173,7 +172,7 @@ export const SongDetail = ({
         </AddToFav>
         <Radar>
           <h2>Feel the Beat!</h2>
-          <img src={`data:image/jpeg;base64,${songRadarGraph}`}></img>
+          <img alt={song.name} src={`data:image/jpeg;base64,${songRadarGraph}`}></img>
         </Radar>
       </Frame>
       <Frame>

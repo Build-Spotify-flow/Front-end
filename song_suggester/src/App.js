@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-// import { url } from "../utils/spotifyAPI";
 
 // Application Component Imports
 
