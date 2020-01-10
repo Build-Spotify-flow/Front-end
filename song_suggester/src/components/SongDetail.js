@@ -181,10 +181,12 @@ export const SongDetail = ({
               style={{ marginLeft: "25%", marginTop: "10rem" }}
             ></Loader>
           )}
-          <img
-            alt={song.name}
-            src={`data:image/jpeg;base64,${songRadarGraph}`}
-          ></img>
+          {songRadarGraph && (
+            <img
+              alt={song.name}
+              src={`data:image/jpeg;base64,${songRadarGraph}`}
+            ></img>
+          )}
         </Radar>
       </Frame>
       <Frame>
