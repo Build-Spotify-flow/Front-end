@@ -206,6 +206,7 @@ export const SongDetail = ({
             onClick={() => {
               setRecommendedSongs([]);
               updateSong(song);
+              setSongRadarGraph("");
             }}
           >
             <Similar>
