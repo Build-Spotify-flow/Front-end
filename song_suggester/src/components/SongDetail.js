@@ -172,7 +172,19 @@ export const SongDetail = ({
         </AddToFav>
         <Radar>
           <h2>Feel the Beat!</h2>
-          <img alt={song.name} src={`data:image/jpeg;base64,${songRadarGraph}`}></img>
+          {!songRadarGraph && (
+            <Loader
+              type="Audio"
+              color="#1DB954"
+              height={200}
+              width={200}
+              style={{ marginLeft: "25%", marginTop: "10rem" }}
+            ></Loader>
+          )}
+          <img
+            alt={song.name}
+            src={`data:image/jpeg;base64,${songRadarGraph}`}
+          ></img>
         </Radar>
       </Frame>
       <Frame>
