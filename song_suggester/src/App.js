@@ -24,7 +24,7 @@ function App() {
 
   const baseUrl = "https://accounts.spotify.com/authorize";
   const clientID = "46e78711e2c14c21a689149e27b79266";
-  const redirect = "http://localhost:3000/dashboard";
+  const redirect = "https://symphinityengine.netlify.com/dashboard";
   const scope = "user-read-private";
   const url = `${baseUrl}?client_id=${clientID}&redirect_uri=${redirect}&scope=${scope}&response_type=token`;
 
