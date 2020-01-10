@@ -178,7 +178,7 @@ export const SongDetail = ({
               color="#1DB954"
               height={200}
               width={200}
-              style={{ marginLeft: "25%", marginTop: "10rem" }}
+              style={{ marginLeft: "calc(50% - 100px)", marginTop: "10rem" }}
             ></Loader>
           )}
           {songRadarGraph && (

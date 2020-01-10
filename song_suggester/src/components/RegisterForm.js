@@ -23,8 +23,6 @@ export const RegisterForm = props => {
   const password = useRef({});
   password.current = watch("password", "");
 
-  console.log(formData);
-
   const onSubmit = data => {
     setLoading(true);
     axiosWithAuth()
