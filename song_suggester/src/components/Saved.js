@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { spotifyAPI } from "../utils/spotifyAPI";
 

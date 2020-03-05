@@ -5,11 +5,13 @@ export const FavsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export const FavCardLink = styled(Link)`
-  width: 30%;
+  width: calc(33.334% - 2rem);
+  margin: 1rem;
   text-decoration: none;
 
   :hover {
@@ -29,7 +31,6 @@ export const FavCard = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 80px;
-  margin: 10px;
   background-color: #282828;
   border: 1px solid #121212;
   padding: 12px;
