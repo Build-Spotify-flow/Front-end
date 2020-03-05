@@ -5,7 +5,7 @@ import { SongDetail } from "./SongDetail";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-const TempDash = ({
+const Dashboard = ({
   selectedSong,
   setSelectedSong,
   searchResults,
@@ -62,4 +62,4 @@ const TempDash = ({
   );
 };
 
-export default withRouter(TempDash);
+export default withRouter(Dashboard);

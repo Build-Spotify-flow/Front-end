@@ -31,7 +31,6 @@ function App() {
         exact
         path="/dashboard"
         component={Dashboard}
-        TempDash
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         searchResults={searchResults}
