@@ -13,8 +13,7 @@ const TempDash = ({
   songData,
   setSongData,
   searchTerm,
-  setSearchTerm,
-  history
+  setSearchTerm
 }) => {
   const logout = () => {
     localStorage.removeItem("token");

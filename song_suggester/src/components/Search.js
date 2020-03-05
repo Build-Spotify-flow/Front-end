@@ -18,9 +18,7 @@ export const Search = ({
   setSelectedSong,
   setSongData
 }) => {
-  const { register, errors } = useForm({
-    mode: "onChange"
-  });
+  const { register, errors } = useForm();
 
   useEffect(() => {
     if (searchTerm.search !== "") {

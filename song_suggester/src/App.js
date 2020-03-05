@@ -20,23 +20,26 @@ function App() {
     <div className="app-wrapper">
       <GlobalStyle />
       <Header></Header>
-      <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+      <Route exact path="/">
+        <Redirect to="/dashboard" />
+      </Route>
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
 
-      <PrivateRoute exact path="/dashboard">
-        <Dashboard
-          TempDash
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          searchResults={searchResults}
-          setSearchResults={setSearchResults}
-          selectedSong={selectedSong}
-          setSelectedSong={setSelectedSong}
-          songData={songData}
-          setSongData={setSongData}
-        />
-      </PrivateRoute>
+      <PrivateRoute
+        exact
+        path="/dashboard"
+        component={Dashboard}
+        TempDash
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        searchResults={searchResults}
+        setSearchResults={setSearchResults}
+        selectedSong={selectedSong}
+        setSelectedSong={setSelectedSong}
+        songData={songData}
+        setSongData={setSongData}
+      ></PrivateRoute>
 
       <PrivateRoute path="/favorites" component={Saved} />
     </div>
