@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import GlobalStyle from "./stylesheets/Global";
+import "./App.css";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState({ search: "" });

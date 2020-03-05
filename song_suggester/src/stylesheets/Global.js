@@ -1,35 +1,34 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     * {
         box-sizing: border-box;
     }
-    html,h1,h2,h3,p,label {
+        html,h1,h2,h3,p,label {
         margin:0;
         color: #fff;
         font-size: 16px;
     }
-  body {
-    color: ${props => (props.whiteColor ? 'white' : 'black')};
-    background-color: #181818;
-    margin: 0;
-    font-family: Roboto;
-  }
 
-  h2 {
-      font-size: 1.5rem;
-      text-align: center;
-      margin: 10px 0 30px;
-  }
+    body {
+        color: ${props => (props.whiteColor ? "white" : "black")};
+        background-color: #181818;
+        margin: 0;
+        font-family: Roboto;
+    }
 
-  p {
-      margin: 10px 0;
-  }
+    h2 {
+        font-size: 1.5rem;
+        text-align: center;
+        margin: 10px 0 30px;
+    }
 
-  i {
-      margin-right: 10px;
-  }
-`
+    p {
+        margin: 10px 0;
+    }
+
+    i {
+        margin-right: 10px;
+    }
+`;
 export default GlobalStyle;
