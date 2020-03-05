@@ -41,7 +41,11 @@ function App() {
         setSongData={setSongData}
       ></PrivateRoute>
 
-      <PrivateRoute path="/favorites" component={Saved} />
+      <PrivateRoute
+        path="/favorites"
+        component={Saved}
+        setSelectedSong={setSelectedSong}
+      />
     </div>
   );
 }

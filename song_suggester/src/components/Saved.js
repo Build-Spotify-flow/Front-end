@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { spotifyAPI } from "../utils/spotifyAPI";
 
-import { Wrapper, Aside, Nav, Main } from "../stylesheets/Layout";
+import { Sidebar } from "./Sidebar";
+import { Wrapper, Main } from "../stylesheets/Layout";
 import { FavCard, Fav } from "../stylesheets/Favorites";
 import {
   Artist,
@@ -11,7 +12,7 @@ import {
   ArtistName
 } from "../stylesheets/SearchResults";
 
-const Saved = () => {
+const Saved = ({ setSelectedSong }) => {
   const [savedSongs, setSavedSongs] = useState([]);
 
   useEffect(() => {
@@ -32,19 +33,7 @@ const Saved = () => {
 
   return (
     <Wrapper>
-      <Aside>
-        <Nav>
-          <a href="/dashboard">
-            <i className="fas fa-columns"></i>Dashboard
-          </a>
-          <a href="/favorites">
-            <i className="far fa-heart"></i>Favorites
-          </a>
-          <a href="logout">
-            <i className="fas fa-sign-out-alt"></i>Logout
-          </a>
-        </Nav>
-      </Aside>
+      <Sidebar setSelectedSong={setSelectedSong}></Sidebar>
       <Main>
         {savedSongs.map(song => {
           return (

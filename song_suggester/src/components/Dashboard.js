@@ -1,9 +1,9 @@
 import React from "react";
-import { Wrapper, Aside, Nav, Main } from "../stylesheets/Layout";
+import { Wrapper, Main } from "../stylesheets/Layout";
+import { Sidebar } from "./Sidebar";
 import { Search } from "./Search";
 import { SongDetail } from "./SongDetail";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
 
 const Dashboard = ({
   selectedSong,
@@ -22,19 +22,7 @@ const Dashboard = ({
 
   return (
     <Wrapper>
-      <Aside>
-        <Nav>
-          <Link to="/dashboard" onClick={() => setSelectedSong({})}>
-            <i className="fas fa-columns"></i>Dashboard
-          </Link>
-          <Link to="/favorites">
-            <i className="far fa-heart"></i>Favorites
-          </Link>
-          <Link to="/login" onClick={() => logout()}>
-            <i className="fas fa-sign-out-alt"></i>Logout
-          </Link>
-        </Nav>
-      </Aside>
+      <Sidebar setSelectedSong={setSelectedSong}></Sidebar>
       <Main>
         <Search
           searchTerm={searchTerm}
