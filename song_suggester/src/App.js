@@ -45,6 +45,9 @@ function App() {
         path="/favorites"
         component={Saved}
         setSelectedSong={setSelectedSong}
+        setSearchTerm={setSearchTerm}
+        setSearchResults={setSearchResults}
+        setSongData={setSongData}
       />
     </div>
   );

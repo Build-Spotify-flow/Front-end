@@ -63,7 +63,7 @@ export const SongDetail = ({
         .then(res => setRecommendedSongIDs(res.data.data))
         .catch(err => console.error(err));
     }
-  }, [songData, selectedSong]);
+  }, [songData, selectedSong, song.id]);
 
   useEffect(() => {
     let listOfIDs = "";
