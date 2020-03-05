@@ -20,6 +20,7 @@ import {
 
 import { Fav, Radar } from "../stylesheets/Favorites";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { spotifyAPI } from "../utils/spotifyAPI";
 
 export const SongDetail = ({
   song,
@@ -28,7 +29,6 @@ export const SongDetail = ({
   setSongData,
   setSearchResults,
   setSearchTerm,
-  spotifyToken,
   selectedSong
 }) => {
   const [recommendedSongIDs, setRecommendedSongIDs] = useState([]);
@@ -65,18 +65,12 @@ export const SongDetail = ({
 
     // prevent sending empty requests to spotify API
     if (listOfIDs.length) {
-      axios
-        .get(`https://api.spotify.com/v1/tracks/?ids=${listOfIDs}`, {
-          headers: {
-            Authorization: `Bearer ${spotifyToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        })
+      spotifyAPI()
+        .get(`tracks/?=ids=${listOfIDs}`)
         .then(res => setRecommendedSongs(res.data.tracks))
         .catch(err => console.error(err));
     }
-  }, [recommendedSongIDs, spotifyToken]);
+  }, [recommendedSongIDs]);
 
   const updateSong = useCallback(
     async song => {
@@ -85,14 +79,7 @@ export const SongDetail = ({
       setSearchTerm({ search: "" });
 
       try {
-        const baseUrl = "https://api.spotify.com/v1/audio-features";
-        const res = await axios.get(`${baseUrl}/${song.id}`, {
-          headers: {
-            Authorization: `Bearer ${spotifyToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        });
+        const res = await spotifyAPI().get(`audio-features/${song.id}`);
 
         const {
           danceability,
@@ -131,18 +118,13 @@ export const SongDetail = ({
         console.error(err);
       }
     },
-    [
-      setSelectedSong,
-      setSearchResults,
-      setSearchTerm,
-      setSongData,
-      spotifyToken
-    ]
+    [setSelectedSong, setSearchResults, setSearchTerm, setSongData]
   );
 
   const addToFavorites = async (e, songID) => {
     e.stopPropagation();
     try {
+      console.log(songID);
       const res = await axiosWithAuth().post(
         "https://cors-anywhere.herokuapp.com/https://spotify-song-suggester-be.herokuapp.com/api/tracks/like",
         { trackid: songID }

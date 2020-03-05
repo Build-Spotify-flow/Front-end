@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
+import { spotifyAPI } from "../utils/spotifyAPI";
 import { SearchResults } from "./SearchResults";
 import {
   Form,
@@ -16,37 +16,25 @@ export const Search = ({
   searchResults,
   setSearchResults,
   setSelectedSong,
-  setSongData,
-  spotifyToken
+  setSongData
 }) => {
   const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     if (searchTerm.search !== "") {
-      const baseUrl = "https://api.spotify.com/v1/search";
-      axios
-        .get(`${baseUrl}?q=${encodeURI(searchTerm.search)}&type=track`, {
-          headers: {
-            Authorization: `Bearer ${spotifyToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        })
+      spotifyAPI()
+        .get(`search?q=${encodeURI(searchTerm.search)}&type=track`)
         .then(res => setSearchResults(res.data.tracks.items))
         .catch(err => console.error(err));
     }
-  }, [searchTerm, setSearchResults, spotifyToken]);
-
-  const onSubmit = data => {
-    console.log("passed validation");
-  };
+  }, [searchTerm, setSearchResults]);
 
   const handleInput = e => {
     setSearchTerm({ ...searchTerm, [e.target.id]: e.target.value });
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form>
       <FormLabel htmlFor="search" style={{ margin: ".5rem 0" }}>
         Search:
       </FormLabel>
@@ -75,7 +63,6 @@ export const Search = ({
         setSearchResults={setSearchResults}
         setSongData={setSongData}
         setSearchTerm={setSearchTerm}
-        spotifyToken={spotifyToken}
       ></SearchResults>
     </Form>
   );

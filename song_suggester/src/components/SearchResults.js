@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
-import axios from "axios";
 
+import { spotifyAPI } from "../utils/spotifyAPI";
 import {
   SearchResultsContainer,
   SongCard,
@@ -19,20 +19,13 @@ export const SearchResults = ({
   spotifyToken
 }) => {
   const updateSong = useCallback(
-    async (song, spotifyToken) => {
+    async song => {
       setSelectedSong(song);
       setSearchResults([]);
       setSearchTerm({ search: "" });
 
       try {
-        const baseUrl = "https://api.spotify.com/v1/audio-features";
-        const res = await axios.get(`${baseUrl}/${song.id}`, {
-          headers: {
-            Authorization: `Bearer ${spotifyToken}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        });
+        const res = await spotifyAPI().get(`audio-features/${song.id}`);
 
         const {
           danceability,
