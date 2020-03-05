@@ -64,7 +64,7 @@ const Saved = ({ setSelectedSong }) => {
                   <SongName>{song.name}</SongName>
                 </Artist>
               </div>
-              <Fav onClick={() => removeFavorite(song.backend_id)}>
+              <Fav saved onClick={() => removeFavorite(song.backend_id)}>
                 <i className="fas fa-heart"></i>
               </Fav>
             </FavCard>

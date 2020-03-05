@@ -28,18 +28,19 @@ export const Fav = styled.div`
     }
 
     .fas {
-        opacity: 0;
+        opacity: ${props => (props.saved ? 1 : 0)};
     }
 
     .fas:hover {
-        opacity: 1;
+        opacity: ${props => (props.saved ? .5 : 1)};
+        cursor: pointer;
     }
 
     .far {
-        opacity: 1;
+        opacity: ${props => (props.saved ? 0 : 1)};
     }
     .far:hover {
-        opacity: 0;
+        opacity: ${props => (props.saved ? 1 : 0)};
     }
 `
 
