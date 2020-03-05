@@ -13,23 +13,42 @@ import {
 } from "../stylesheets/SearchResults";
 
 const Saved = ({ setSelectedSong }) => {
+  let backendIDs;
   const [savedSongs, setSavedSongs] = useState([]);
 
   useEffect(() => {
     axiosWithAuth()
       .get("/songs")
       .then(res => {
+        let dict = {};
+        res.data.songs.forEach(song => (dict[song.spotify_id] = song.song_id));
+        backendIDs = dict;
         return res.data.songs;
       })
       .then(songs => {
         const idString = songs.map(song => song.spotify_id).toString();
         spotifyAPI()
           .get(`/tracks/?ids=${idString}`)
-          .then(res => setSavedSongs(res.data.tracks))
+          .then(res => {
+            res.data.tracks.forEach(track => {
+              track.backend_id = backendIDs[track.id];
+            });
+
+            return setSavedSongs(res.data.tracks);
+          })
           .catch(err => console.error(err));
       })
       .catch(err => console.error(err));
   }, []);
+
+  const removeFavorite = async id => {
+    try {
+      await axiosWithAuth().delete(`songs/${id}`);
+      setSavedSongs(savedSongs.filter(song => song.backend_id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Wrapper>
@@ -45,7 +64,7 @@ const Saved = ({ setSelectedSong }) => {
                   <SongName>{song.name}</SongName>
                 </Artist>
               </div>
-              <Fav>
+              <Fav onClick={() => removeFavorite(song.backend_id)}>
                 <i className="fas fa-heart"></i>
               </Fav>
             </FavCard>

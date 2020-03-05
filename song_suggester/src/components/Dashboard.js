@@ -15,11 +15,6 @@ const Dashboard = ({
   searchTerm,
   setSearchTerm
 }) => {
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("spotifyToken");
-  };
-
   return (
     <Wrapper>
       <Sidebar setSelectedSong={setSelectedSong}></Sidebar>
