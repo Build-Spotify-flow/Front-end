@@ -26,15 +26,13 @@ export const RegisterForm = props => {
   const onSubmit = data => {
     setLoading(true);
     axiosWithAuth()
-      .post(
-        "https://cors-anywhere.herokuapp.com/https://spotify-song-suggester-be.herokuapp.com/api/auth/register",
-        {
-          username: data.username,
-          password: data.password
-        }
-      )
+      .post("auth/register", {
+        username: data.username,
+        password: data.password
+      })
       .then(res => {
-        localStorage.setItem("token", res.data.payload);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("spotifyToken", res.data.spotifyToken);
         props.history.push("");
       })
       .catch(err => console.log(err));
@@ -59,12 +57,9 @@ export const RegisterForm = props => {
                 onChange={e => handleInput(e)}
                 ref={register({
                   required: true,
-                  minlength: 8,
-                  pattern: {
-                    value: /^(?:[A-Z\d][A-Z\d_-]{7,})$/i,
-                    message:
-                      "Please enter a username with at least 8 alphanumeric characters."
-                  }
+                  minlength: 3,
+                  message:
+                    "Please enter a username with at least 3 alphanumeric characters."
                 })}
               />
             </FormLabel>
@@ -74,28 +69,7 @@ export const RegisterForm = props => {
                 {errors.username.message}
               </FormValidationWarning>
             )}
-            <FormLabel htmlFor="email">
-              Email<Ast>*</Ast>:
-              <FormInput
-                type="email"
-                id="email"
-                name="email"
-                onChange={e => handleInput(e)}
-                ref={register({
-                  required: true,
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "Please enter a valid email address."
-                  }
-                })}
-              />
-            </FormLabel>
 
-            {errors.email && (
-              <FormValidationWarning>
-                {errors.email.message}
-              </FormValidationWarning>
-            )}
             <FormLabel htmlFor="password">
               Password<Ast>*</Ast>:
               <FormInput
@@ -105,11 +79,8 @@ export const RegisterForm = props => {
                 onChange={e => handleInput(e)}
                 ref={register({
                   required: true,
-                  minlength: 8,
-                  pattern: {
-                    value: /^(?=.{8,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*/,
-                    message: "Please enter a password of at least 8 characters."
-                  }
+                  minlength: 6,
+                  message: "Please enter a password of at least 6 characters."
                 })}
               />
             </FormLabel>
