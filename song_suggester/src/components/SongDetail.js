@@ -19,6 +19,7 @@ import {
   SongName
 } from "../stylesheets/SearchResults";
 
+import { Notification } from "./Notification";
 import { Fav, Radar } from "../stylesheets/Favorites";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { spotifyAPI } from "../utils/spotifyAPI";
@@ -35,6 +36,7 @@ export const SongDetail = ({
   const [recommendedSongIDs, setRecommendedSongIDs] = useState([]);
   const [recommendedSongs, setRecommendedSongs] = useState([]);
   const [songRadarGraph, setSongRadarGraph] = useState("");
+  const [notificationMsg, setNotificationMsg] = useState("");
 
   useEffect(() => {
     // prevent sending empty requests to DS API
@@ -125,12 +127,13 @@ export const SongDetail = ({
   const addToFavorites = async (e, songID) => {
     e.stopPropagation();
     try {
-      console.log(songID);
-      const res = await axiosWithAuth().post(
-        "https://cors-anywhere.herokuapp.com/https://spotify-song-suggester-be.herokuapp.com/api/tracks/like",
-        { trackid: songID }
-      );
-      console.log(res);
+      const res = await axiosWithAuth().post("songs", { spotify_id: songID });
+      setNotificationMsg(res.data.message);
+
+      const timer = setTimeout(() => {
+        setNotificationMsg(null);
+        clearTimeout(timer);
+      }, 3000);
     } catch (err) {
       console.error(err);
     }
@@ -153,6 +156,9 @@ export const SongDetail = ({
           <i className="fas fa-heart"></i>
           <h3>Add to Favorites</h3>
         </AddToFav>
+        {notificationMsg && (
+          <Notification message={notificationMsg}></Notification>
+        )}
         <Radar>
           <h2>Feel the Beat!</h2>
           {!songRadarGraph && (
