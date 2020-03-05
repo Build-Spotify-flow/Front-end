@@ -52,9 +52,15 @@ export const SongDetail = ({
           }
         )
         .then(res => {
-          setRecommendedSongIDs(res.data.recommended_song_ids);
           setSongRadarGraph(res.data.radar_chart);
         })
+        .catch(err => console.error(err));
+
+      axios
+        .get(
+          `https://cors-anywhere.herokuapp.com/https://spotify-ml-component.herokuapp.com/api/v1/recommend/${song.id}`
+        )
+        .then(res => setRecommendedSongIDs(res.data.data))
         .catch(err => console.error(err));
     }
   }, [songData, selectedSong]);
@@ -127,7 +133,9 @@ export const SongDetail = ({
   const addToFavorites = async (e, songID) => {
     e.stopPropagation();
     try {
-      const res = await axiosWithAuth().post("songs", { spotify_id: songID });
+      const res = await axiosWithAuth().post("songs", {
+        spotify_id: songID
+      });
       setNotificationMsg(res.data.message);
 
       const timer = setTimeout(() => {
@@ -160,14 +168,17 @@ export const SongDetail = ({
           <Notification message={notificationMsg}></Notification>
         )}
         <Radar>
-          <h2>Feel the Beat!</h2>
+          <h2>Audio Properties</h2>
           {!songRadarGraph && (
             <Loader
               type="Audio"
               color="#1DB954"
               height={200}
               width={200}
-              style={{ marginLeft: "calc(50% - 100px)", marginTop: "10rem" }}
+              style={{
+                marginLeft: "calc(50% - 100px)",
+                marginTop: "10rem"
+              }}
             ></Loader>
           )}
           {songRadarGraph && (
