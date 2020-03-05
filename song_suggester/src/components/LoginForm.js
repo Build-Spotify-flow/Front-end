@@ -26,18 +26,18 @@ const LoginForm = props => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  console.log(formData);
+
   const onSubmit = data => {
     setLoading(true);
     axiosWithAuth()
-      .post(
-        "https://cors-anywhere.herokuapp.com/https://spotify-song-suggester-be.herokuapp.com/api/auth/login",
-        {
-          username: data.login,
-          password: data.password
-        }
-      )
+      .post("auth/login", {
+        username: data.login,
+        password: data.password
+      })
       .then(res => {
-        localStorage.setItem("token", res.data.payload);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("spotifyToken", res.data.spotifyToken);
         props.history.push("");
       })
       .catch(err => console.log(err));
@@ -60,8 +60,9 @@ const LoginForm = props => {
                 ref={register({
                   required: true,
                   pattern: {
-                    value: /^(?:[A-Z\d][A-Z\d_-]{7,}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i,
-                    message: "Please enter a valid email address or username."
+                    value: /^[a-zA-Z0-9]+$/i,
+                    message:
+                      "Please enter an alphanumeric username without spaces"
                   }
                 })}
               />
@@ -80,10 +81,8 @@ const LoginForm = props => {
                 onChange={e => handleInput(e)}
                 ref={register({
                   required: true,
-                  pattern: {
-                    value: /^(?=.{8,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*/,
-                    message: "Invalid password."
-                  }
+                  minLength: 6,
+                  message: "Invalid password."
                 })}
               />
             </FormLabel>
