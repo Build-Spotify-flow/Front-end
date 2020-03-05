@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { spotifyAPI } from "../utils/spotifyAPI";
+
 import { Wrapper, Aside, Nav, Main } from "../stylesheets/Layout";
 import { FavCard, Fav } from "../stylesheets/Favorites";
 import {
@@ -7,7 +10,26 @@ import {
   SongName,
   ArtistName
 } from "../stylesheets/SearchResults";
+
 const Saved = () => {
+  const [savedSongs, setSavedSongs] = useState([]);
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get("/songs")
+      .then(res => {
+        return res.data.songs;
+      })
+      .then(songs => {
+        const idString = songs.map(song => song.spotify_id).toString();
+        spotifyAPI()
+          .get(`/tracks/?ids=${idString}`)
+          .then(res => setSavedSongs(res.data.tracks))
+          .catch(err => console.error(err));
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <Wrapper>
       <Aside>
@@ -24,66 +46,22 @@ const Saved = () => {
         </Nav>
       </Aside>
       <Main>
-        <FavCard>
-          <div>
-            <Thumb src="https://i.scdn.co/image/ab67616d000048514d9f7b88e82db31d13ac6668" />
-            <Artist>
-              <ArtistName>Gorillaz</ArtistName>
-              <SongName>One Percent</SongName>
-            </Artist>
-          </div>
-          <Fav>
-            <i className="fas fa-heart"></i>
-          </Fav>
-        </FavCard>
-        <FavCard>
-          <div>
-            <Thumb src="https://i.scdn.co/image/ab67616d0000485184e0a5f22d758260588fc2ca" />
-            <Artist>
-              <ArtistName>Thundercat</ArtistName>
-              <SongName>King of the Hill</SongName>
-            </Artist>
-          </div>
-          <Fav>
-            <i className="fas fa-heart"></i>
-          </Fav>
-        </FavCard>
-        <FavCard>
-          <div>
-            <Thumb src="https://i.scdn.co/image/ab67616d000048519b6ac98a52f62d5cb473da40" />
-            <Artist>
-              <ArtistName>The Neighbourhood</ArtistName>
-              <SongName>Blue</SongName>
-            </Artist>
-          </div>
-          <Fav>
-            <i className="fas fa-heart"></i>
-          </Fav>
-        </FavCard>
-        <FavCard>
-          <div>
-            <Thumb src="https://i.scdn.co/image/a1a62f04a9d696c37e3688f44398a43121c33776" />
-            <Artist>
-              <ArtistName>Matt Quentin</ArtistName>
-              <SongName>Just A Moment</SongName>
-            </Artist>
-          </div>
-          <Fav>
-            <i className="fas fa-heart"></i>
-          </Fav>
-        </FavCard>
-        <FavCard>
-          <div>
-            <Thumb src="https://i.scdn.co/image/ab67616d0000485122c614bdaf27ea223bcb2add" />
-            <Artist>
-              <ArtistName>Gregory Alan Isakov</ArtistName>
-              <SongName>Powder</SongName>
-            </Artist>
-          </div>
-          <Fav>
-            <i className="fas fa-heart"></i>
-          </Fav>
-        </FavCard>
+        {savedSongs.map(song => {
+          return (
+            <FavCard key={song.id}>
+              <div>
+                <Thumb src={song.album.images[2].url} />
+                <Artist>
+                  <ArtistName>{song.artists[0].name}</ArtistName>
+                  <SongName>{song.name}</SongName>
+                </Artist>
+              </div>
+              <Fav>
+                <i className="fas fa-heart"></i>
+              </Fav>
+            </FavCard>
+          );
+        })}
       </Main>
     </Wrapper>
   );
