@@ -7,7 +7,8 @@ import {
   Artist,
   Thumb,
   SongName,
-  ArtistName
+  ArtistName,
+  ThumbContainer
 } from "../stylesheets/SearchResults";
 
 export const SearchResults = ({
@@ -71,7 +72,9 @@ export const SearchResults = ({
     <SearchResultsContainer>
       {songs.map(song => (
         <SongCard key={song.id} onClick={() => updateSong(song, spotifyToken)}>
-          <Thumb src={song.album.images[2].url}></Thumb>
+          <ThumbContainer>
+            <Thumb src={song.album.images[2].url}></Thumb>
+          </ThumbContainer>
           <Artist>
             <ArtistName>{song.artists[0].name}</ArtistName>
             <SongName>{song.name}</SongName>
