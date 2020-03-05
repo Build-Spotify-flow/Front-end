@@ -13,6 +13,7 @@ import {
 
 import {
   Thumb,
+  ThumbContainer,
   Artist,
   ArtistName,
   SongName
@@ -194,7 +195,9 @@ export const SongDetail = ({
             }}
           >
             <Similar>
-              <Thumb src={song.album.images[2].url} />
+              <ThumbContainer>
+                <Thumb src={song.album.images[2].url} />
+              </ThumbContainer>
               <Artist>
                 <ArtistName>{song.artists[0].name}</ArtistName>
                 <SongName>{song.name}</SongName>
