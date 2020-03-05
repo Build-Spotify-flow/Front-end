@@ -26,8 +26,6 @@ const LoginForm = props => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  console.log(formData);
-
   const onSubmit = data => {
     setLoading(true);
     axiosWithAuth()
