@@ -18,7 +18,9 @@ export const Search = ({
   setSelectedSong,
   setSongData
 }) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors } = useForm({
+    mode: "onChange"
+  });
 
   useEffect(() => {
     if (searchTerm.search !== "") {
@@ -43,7 +45,7 @@ export const Search = ({
         id="search"
         name="search"
         type="text"
-        onChange={e => handleInput(e)}
+        onChange={handleInput}
         value={searchTerm.search}
         ref={register({
           minlength: 1,
