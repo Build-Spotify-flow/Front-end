@@ -1,13 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const axiosWithAuth = () => {
-    const token = `Bearer ${localStorage.getItem('token')}`
-    
-    return axios.create({
-        // baseUrl: '  https://spotify-song-suggester-be.herokuapp.com/api/auth',
-        headers: {
-            "Authorization" : token
-        }
-    })
+  const token = window.localStorage.getItem("token");
 
-}
+  return axios.create({
+    headers: {
+      authorization: token
+    },
+    baseURL: "https://damp-hamlet-68165.herokuapp.com/api/"
+  });
+};
