@@ -19,20 +19,19 @@ const TempDash = ({
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("spotifyToken");
-    history.push("/login");
   };
 
   return (
     <Wrapper>
       <Aside>
         <Nav>
-          <Link href="/dashboard" onClick={() => setSelectedSong({})}>
+          <Link to="/dashboard" onClick={() => setSelectedSong({})}>
             <i className="fas fa-columns"></i>Dashboard
           </Link>
           <Link to="/favorites">
             <i className="far fa-heart"></i>Favorites
           </Link>
-          <Link onClick={() => logout()}>
+          <Link to="/login" onClick={() => logout()}>
             <i className="fas fa-sign-out-alt"></i>Logout
           </Link>
         </Nav>
